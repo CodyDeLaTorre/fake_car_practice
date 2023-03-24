@@ -1,3 +1,4 @@
+import time
 
 class Car:
     def __init__(self):
@@ -6,6 +7,7 @@ class Car:
         self.gas_pedal = False
         self.steering_wheel = 0
         self.gear = "P"
+        self.max_speed = 160
 
     def start(self):
         self.on = True
@@ -15,11 +17,18 @@ class Car:
 
     def gas_pedal_down(self):
         self.gas_pedal = True
-    
-    def accelerate(self):
         while self.gas_pedal == True:
             self.speed += 1
-            print("car is accelerating!")
+            time.sleep(.1)
+            if self.speed == self.max_speed:
+                break
+            print(f"Your speed is {self.speed}")
+        print(f"Your speed is {self.speed}")
+        
+    def gas_pedal_up(self):
+        self.gas_pedal = False
+        self.decelerate()
+    
 
     def decelerate(self):
         if self.speed == 0:
@@ -39,7 +48,10 @@ if choice == 'Y':
     gear_selection = input("what gear do you want to be in? P = Park, R = Reverse, N = Neatral, D = Drive, L = Low ")
     car.gear = gear_selection
     if car.gear == "D":
-        car.accelerate
+        drive = input("press the gas? Y or N: ")
+        if drive == 'Y':
+            car.gas_pedal_down()
+        
 
 else:
     car.stop
